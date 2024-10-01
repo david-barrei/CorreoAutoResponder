@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View,TemplateView
 from newsletters.models import Newsletter
 from newsletters.forms import NewsletterCreationForm
@@ -50,3 +50,13 @@ class NewslettersCreateView(View):
                 'form':form,
           }
           return render(request, 'dashboard/created.html', context)
+     
+
+class NewsletterDetailView(View):
+     def get(self, request, pk,*args, **kwargs):
+          newsletter = get_object_or_404(Newsletter,pk=pk)
+          context={
+               'newsletter':newsletter
+
+          }
+          return render (request, 'dashboard/detail.html', context)
